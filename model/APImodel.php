@@ -118,19 +118,62 @@ class APImodel {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
       
       
-if($row != null){
-    $this->ContactName = $row['ContactName'];
-    $this->ContactEmail = $row['ContactEmail'];
-    $this->ContactNumber = $row['ContactNumber'];
-    $this->PropertyName = $row['PropertyName'];
-    $this->Campus  = $row['Campus'];
-    $this->CapacityApproved = $row['CapacityApproved'];
-    $this->Address = $row['Address'];
-    $this->key = $row['id'];
-}
+        if($row != null){
+            $this->ContactName = $row['ContactName'];
+            $this->ContactEmail = $row['ContactEmail'];
+            $this->ContactNumber = $row['ContactNumber'];
+            $this->PropertyName = $row['PropertyName'];
+            $this->Campus  = $row['Campus'];
+            $this->CapacityApproved = $row['CapacityApproved'];
+            $this->Address = $row['Address'];
+            $this->key = $row['id'];
+        }
 
       
       
+      }
+
+
+      
+      public function Contribute(){
+
+
+
+        // Create Query
+        $query = 'INSERT INTO ' . $this->accommodationTable . ' SET ContactName = :ContactName, ContactEmail = :ContactEmail,ContactNumber = :ContactNumber,PropertyName = :PropertyName,Campus = :Campus,CapacityApproved = :CapacityApproved,Address = :Address';
+   
+        // prepare statement
+        $stmt = $this->conn->prepare($query);
+
+
+        //clean data
+        $this->ContactName = htmlspecialchars(strip_tags($this->ContactName));
+        $this->ContactEmail = htmlspecialchars(strip_tags($this->ContactEmail));
+        $this->ContactNumber = htmlspecialchars(strip_tags($this->ContactNumber));
+        $this->PropertyName = htmlspecialchars(strip_tags($this->PropertyName));
+        $this->Campus = htmlspecialchars(strip_tags($this->Campus));
+        $this->CapacityApproved = htmlspecialchars(strip_tags($this->CapacityApproved));
+        $this->Address = htmlspecialchars(strip_tags($this->Address));
+
+
+        //bind data
+        $stmt->bindParam(':ContactName', $this->ContactName);
+        $stmt->bindParam(':ContactEmail', $this->ContactEmail);
+        $stmt->bindParam(':ContactNumber', $this->ContactNumber);
+        $stmt->bindParam(':PropertyName', $this->PropertyName);
+        $stmt->bindParam(':Campus', $this->Campus);
+        $stmt->bindParam(':CapacityApproved', $this->CapacityApproved);
+        $stmt->bindParam(':Address', $this->Address);
+        // execute query
+        if($stmt->execute()){
+          return true;
+        }
+  
+        // print error if something goes wrong
+        printf("Error: %s.\n",$stmt->error);
+  
+        return false;
+  
       }
 
 }
