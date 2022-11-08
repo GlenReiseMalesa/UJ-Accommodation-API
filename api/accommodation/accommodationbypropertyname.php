@@ -3,9 +3,10 @@
    header('Access-Control-Allow-Origin: *');
    header('Content-Type: application/json');
 
-   include_once '../../config/connection.php';
-   include_once '../../model/APImodel.php';
-   
+   define('__ROOT__', dirname(dirname(__FILE__)));
+   include_once __ROOT__. '../../config/connection.php';
+   include_once __ROOT__. '../../model/APImodel.php';
+
       // Instantiate DB & connect
       $database = new Connection();
       $db = $database->connect();

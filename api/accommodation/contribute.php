@@ -5,9 +5,10 @@
    header('Access-Control-Allow-Methods: POST');
    header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-   include_once '../../config/connection.php';
-   include_once '../../model/APImodel.php';
-   
+   define('__ROOT__', dirname(dirname(__FILE__)));
+   include_once __ROOT__. '../../config/connection.php';
+   include_once __ROOT__. '../../model/APImodel.php';
+
       // Instantiate DB & connect
       $database = new Connection();
       $db = $database->connect();
