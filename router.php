@@ -10,13 +10,20 @@ class Router {
     }
 
     public function get($route,$view){
-       
-        if($_SERVER['REQUEST_METHOD'] !== 'GET'){
-            return false;
-        }
 
         $uri = $_SERVER['REQUEST_URI'];
         $route = "/uj-accommodation-api" . $route;
+       
+        if($_SERVER['REQUEST_METHOD'] !== 'GET'){
+            if($route == '/contribute'){
+                $view = "api/accommodation/contribute.php";
+                $route = $uri;
+            }else{
+             return false;
+            }
+        }
+
+
 
         if(isset($_GET['key'])){
             if($_GET['key'] != ''){
@@ -54,16 +61,10 @@ class Router {
 
     public function post($route,$view){
        
-        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
-            return false;
-        }
-
-        $uri = $_SERVER['REQUEST_URI'];
-        $route = "/uj-accommodation-api" . $route;
-        if($uri === $route){
-            $this->handled = true;
-          return include_once($view);  
-        }
+        $route = "/uj-accommodation-api" . $route;  
+        $this->handled = true;
+        return include_once($view);  
+        
     }
 
     function __destruct(){
